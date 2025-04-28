@@ -1,10 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 
-const cors = require("cors");
-
 const userRoutes = require("./routes/users.js");
-
+const workoutRoutes = require("./routes/workouts");
 
 require('dotenv').config();
 
@@ -17,19 +15,8 @@ mongoose.connection.once("open", () => console.log("We're connected to the datab
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-const port = 3000;
-
-const corsOptions = {
-	origin: [
-		'http://localhost:3000',
-	],
-	credentials: true,
-	optionsSuccessStatus: 200
-}
-
-app.use(cors(corsOptions));
-
 app.use("/users", userRoutes);
+app.use("/workouts", workoutRoutes);
 
 if(require.main === module){
 	app.listen(process.env.PORT || port, () => console.log(`Server running at port ${process.env.PORT || port}`));
